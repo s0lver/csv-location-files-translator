@@ -1,10 +1,10 @@
 class BatteryStatus(object):
-    def __init__(self, level, voltage, status, temperature, connected):
+    def __init__(self, level, voltage, status, temperature, plugged):
         self._level = level
         self._voltage = voltage
         self._status = status
         self._temperature = temperature
-        self._connected = connected
+        self._plugged = plugged
 
     @property
     def level(self):
@@ -39,14 +39,14 @@ class BatteryStatus(object):
         self._temperature = value
 
     @property
-    def connected(self):
-        return self._connected
+    def plugged(self):
+        return self._plugged
 
-    @connected.setter
-    def connected(self, value):
-        self._connected = value
+    @plugged.setter
+    def plugged(self, value):
+        self._plugged = value
 
     def __str__(self):
         return '%.2f, %.1f, %s, %d, %s' % \
-               (self.level, self.voltage, self.status, self.temperature, self.connected)
+               (self.level, self.voltage, self.status, self.temperature, self.plugged)
 

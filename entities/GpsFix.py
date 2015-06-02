@@ -3,13 +3,34 @@ from entities import BatteryStatus
 
 
 class GpsFix(object):
-    def __init__(self, obtained, latitude, longitude, accuracy, date, level, voltage, status, temperature, connected):
+    def __init__(self, id, id_trajectory, obtained, latitude, longitude, height, accuracy, speed, date,
+                 level, voltage, status, temperature, connected):
+        self._id = id
+        self._id_trajectory = id_trajectory
         self._obtained = obtained
         self._latitude = latitude
         self._longitude = longitude
+        self._height = height
         self._accuracy = accuracy
+        self._speed = speed
         self._date = date
         self._batteryInfo = BatteryStatus.BatteryStatus(level, voltage, status, temperature, connected)
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        self._id = value
+
+    @property
+    def id_trajectory(self):
+        return self._id_trajectory
+
+    @id_trajectory.setter
+    def id_trajectory(self, value):
+        self._id_trajectory = value
 
     @property
     def obtained(self):
@@ -36,12 +57,28 @@ class GpsFix(object):
         self._longitude = value
 
     @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
     def accuracy(self):
         return self._accuracy
 
     @accuracy.setter
     def accuracy(self, value):
         self._accuracy = value
+
+    @property
+    def speed(self):
+        return self._speed
+
+    @speed.setter
+    def speed(self, value):
+        self._speed = value
 
     @property
     def date(self):
@@ -60,5 +97,6 @@ class GpsFix(object):
         self._batteryInfo = value
 
     def __str__(self):
-        return '%f, %f, %f, %s, %s' % \
-               (self._latitude, self._longitude, self._accuracy, self._date, self._batteryInfo)
+        return '%d, %d, %i, %f, %f, %f, %s, %s' % \
+               (self._id, self._id_trajectory, self._obtained, self._latitude, self._longitude, self._accuracy,
+                self._date, self._batteryInfo)

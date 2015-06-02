@@ -1,35 +1,36 @@
-from entities import GpsFix
-
-import QueryRunner
 import csv
+from entities import GpsFix
+from datetime import datetime
 
-def create_gps_fix():
+def create_gps_fix(row):
+    id = 0
+    id_trajectory  = 0
     obtained = True if row[0] == 'Si' else False
     latitude = float(row[1])
     longitude = float(row[2])
+    height = 0
+    speed = 0
     accuracy = float(row[3])
-    date = row[4]
+    date = datetime.strptime(row[4],'%a %b %d %H:%M:%S CDT %Y')
     level = float(row[5])
     voltage = float(row[6])
     status = row[7]
     temperature = float(row[8])
     connected = row[9]
-    return GpsFix.GpsFix(obtained, latitude, longitude, accuracy, date, level, voltage, \
-                         status, temperature, connected)
+    return GpsFix.GpsFix(id, id_trajectory, obtained, latitude, longitude, height, accuracy, speed, date,
+                         level, voltage, status, temperature, connected)
 
 def read_gps_fixes_file(path):
-    file = open('sample-file-smartphone.csv')
+    file = open(path)
     csv_file = csv.reader(file)
     gps_fixes = []
 
     for row in csv_file:
-        fix = create_gps_fix()
-        if fix.obtained:
-            gps_fixes.append(fix)
+        fix = create_gps_fix(row)
+        gps_fixes.append(fix)
 
-records = QueryRunner.run_query('select * from trajectories')
+    return gps_fixes
 
-print (records)
 """
 Description of the smartphone csv file structure
 Pos     :meaning
