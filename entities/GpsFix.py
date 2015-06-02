@@ -1,16 +1,15 @@
-import entities
 from entities import BatteryStatus
 
 
 class GpsFix(object):
-    def __init__(self, id, id_trajectory, obtained, latitude, longitude, height, accuracy, speed, date,
+    def __init__(self, id, id_trajectory, obtained, latitude, longitude, altitude, accuracy, speed, date,
                  level, voltage, status, temperature, connected):
         self._id = id
         self._id_trajectory = id_trajectory
         self._obtained = obtained
         self._latitude = latitude
         self._longitude = longitude
-        self._height = height
+        self._altitude = altitude
         self._accuracy = accuracy
         self._speed = speed
         self._date = date
@@ -57,12 +56,12 @@ class GpsFix(object):
         self._longitude = value
 
     @property
-    def height(self):
-        return self._height
+    def altitude(self):
+        return self._altitude
 
-    @height.setter
-    def height(self, value):
-        self._height = value
+    @altitude.setter
+    def altitude(self, value):
+        self._altitude = value
 
     @property
     def accuracy(self):

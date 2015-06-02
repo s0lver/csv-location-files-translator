@@ -1,7 +1,7 @@
 from QueryRunner import *
 from entities.GpsFix import GpsFix
 
-def add_trajectory(trajectory):
+def save_trajectory(trajectory):
     """
     Inserts a trajectory and updates it with the inserted id
     :param trajectory: trajectory object
@@ -18,7 +18,7 @@ def add_trajectory(trajectory):
     inserted_id = run_write_query(query, trajectory_data)
     trajectory.id = inserted_id
 
-def add_gps_fix(fix):
+def save_gps_fix(fix):
     """
     Inserts a GpsFix and updates it with the inserted id
     :param fix: fix object
@@ -38,7 +38,7 @@ def add_gps_fix(fix):
         'obtained': fix.obtained,
         'latitude': fix.latitude,
         'longitude': fix.longitude,
-        'height': fix.height,
+        'height': fix.altitude,
         'accuracy': fix.accuracy,
         'speed': fix.speed,
         'date': fix.date,
@@ -52,7 +52,7 @@ def add_gps_fix(fix):
     inserted_id = run_write_query(query, fix_data)
     fix.id = inserted_id
 
-def add_gps_fixes(fixes):
+def save_gps_fixes(fixes):
     """
     Inserts the list of fixes
     :param fixes: List of fixes to insert
@@ -67,7 +67,7 @@ def add_gps_fixes(fixes):
     flat_fixes = []
 
     for fix in fixes:
-        flat_fixes.append((fix.id_trajectory, fix.obtained, fix.latitude, fix.longitude, fix.height, fix.accuracy,
+        flat_fixes.append((fix.id_trajectory, fix.obtained, fix.latitude, fix.longitude, fix.altitude, fix.accuracy,
                            fix.speed, fix.date, fix.batteryInfo.level, fix.batteryInfo.voltage,
                            fix.batteryInfo.status, fix.batteryInfo.temperature, fix.batteryInfo.plugged))
 

@@ -8,21 +8,22 @@ def create_gps_fix(row):
     obtained = True if row[0] == 'Si' else False
     latitude = float(row[1])
     longitude = float(row[2])
-    height = 0
-    speed = 0
-    accuracy = float(row[3])
-    date = datetime.strptime(row[4],'%a %b %d %H:%M:%S CDT %Y')
-    level = float(row[5])
-    voltage = float(row[6])
-    status = row[7]
-    temperature = float(row[8])
-    connected = row[9]
-    return GpsFix.GpsFix(id, id_trajectory, obtained, latitude, longitude, height, accuracy, speed, date,
+    altitude = float(row[3])
+    accuracy = float(row[4])
+    speed = float(row[5])
+    date = datetime.strptime(row[6],'%a %b %d %H:%M:%S CDT %Y')
+    level = float(row[7])
+    voltage = float(row[8])
+    status = row[9]
+    temperature = float(row[10])
+    connected = row[11]
+    return GpsFix.GpsFix(id, id_trajectory, obtained, latitude, longitude, altitude, accuracy, speed, date,
                          level, voltage, status, temperature, connected)
 
 def read_gps_fixes_file(path):
     file = open(path)
     csv_file = csv.reader(file)
+
     gps_fixes = []
 
     for row in csv_file:
@@ -34,14 +35,23 @@ def read_gps_fixes_file(path):
 """
 Description of the smartphone csv file structure
 Pos     :meaning
-0       :Whether reading was obtained or not [Si = Yes| No = No]
-1       :Latitude
-2       :Longitude
-3       :Accuracy
-4       :Date Format ('Fri May 29 23:36:32 CDT 2015')
-5       :Battery level
-6       :Voltage
-7       :Status (Charging, discharging)
-8       :Temperature
-9       :Connected (Unplugged, plugged, USB)
+0:  whether reading was obtained "Si" : "No"
+1:  latitude
+2:  longitude
+3:  altitude
+4:  accuracy
+5:  speed
+6:  timestamp
+7:  battery level
+8:  voltage
+9:  status
+10: temperature
+11: plugged
+"""
+
+"""
+Structure of the staypoints (unused here)
+return String.format("%f,%f,%s,%s,%d", getLatitude(), getLongitude(),
+                simpleDateFormat.format(getArrivalTime()), simpleDateFormat.format(getDepartureTime()),
+                getAmountFixesInvolved());
 """
