@@ -1,4 +1,4 @@
-from QueryRunner import *
+from db import QueryRunner as qr
 from entities.GpsFix import GpsFix
 
 def save_trajectory(trajectory):
@@ -15,7 +15,7 @@ def save_trajectory(trajectory):
         'end_time' : trajectory.end_time
     }
 
-    inserted_id = run_write_query(query, trajectory_data)
+    inserted_id = qr.run_write_query(query, trajectory_data)
     trajectory.id = inserted_id
 
 def save_gps_fix(fix):
@@ -49,7 +49,7 @@ def save_gps_fix(fix):
         'plugged': fix.batteryInfo.plugged
     }
 
-    inserted_id = run_write_query(query, fix_data)
+    inserted_id = qr.run_write_query(query, fix_data)
     fix.id = inserted_id
 
 def save_gps_fixes(fixes):
@@ -71,7 +71,7 @@ def save_gps_fixes(fixes):
                            fix.speed, fix.date, fix.batteryInfo.level, fix.batteryInfo.voltage,
                            fix.batteryInfo.status, fix.batteryInfo.temperature, fix.batteryInfo.plugged))
 
-    run_write_many_query(query, flat_fixes)
+    qr.run_write_many_query(query, flat_fixes)
 
 def get_gps_fixes_by_trajectory(id_trajectory):
     """
@@ -82,7 +82,7 @@ def get_gps_fixes_by_trajectory(id_trajectory):
     query = "SELECT * FROM smartphonefixes WHERE idTrajectory = %(id_trajectory)s"
     select_data = {'id_trajectory': id_trajectory}
 
-    fixes = run_read_query(query, select_data)
+    fixes = qr.run_read_query(query, select_data)
 
     gps_fixes = []
     for fix in fixes:
