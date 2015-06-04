@@ -1,5 +1,4 @@
 from entities import BatteryStatus
-from datetime import datetime
 import math
 
 

@@ -1,5 +1,4 @@
 import simplekml
-# pip install simplekml
 
 def create_pinned(path, fixes):
     kml = simplekml.Kml()
@@ -16,9 +15,7 @@ def create_pinned_timed(path, fixes):
     i = 1
     for fix in fixes:
         p = kml.newpoint(name='point%d' % i, coords=[(fix.longitude, fix.latitude, fix.altitude)])
-        # 2012-05-15T13:47:20Z
-        # 2012-05-15 13:47:20
-        p.timestamp.when = fix.date
+        p.timestamp.when = fix.date.strftime('%Y-%m-%dT%H:%M:%SZ')
         i += 1
 
     kml.save(path)
