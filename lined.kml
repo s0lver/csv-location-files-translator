@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="feat_12">
+        <Style id="stylesel_0">
+            <LineStyle id="substyle_0">
+                <color>ff0000ff</color>
+                <colorMode>normal</colorMode>
+                <width>5</width>
+            </LineStyle>
+        </Style>
+        <Placemark id="feat_13">
+            <name>trajectory</name>
+            <description>-</description>
+            <styleUrl>#stylesel_0</styleUrl>
+            <LineString id="geom_10">
+                <coordinates>-98.166489,24.840481,0.0 -98.164726,24.84123,0.0 -98.163269,24.841026,0.0 -98.156059,24.842857,0.0 -98.155846,24.844316,0.0 -98.155792,24.845079,0.0 -98.155815,24.845606,0.0 -98.155792,24.846004,0.0 -98.155647,24.849789,0.0 -98.155594,24.850178,0.0</coordinates>
+                <altitudeMode>relativeToGround</altitudeMode>
+            </LineString>
+        </Placemark>
+    </Document>
+</kml>

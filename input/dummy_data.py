@@ -1,6 +1,7 @@
 from entities import GpsFix
 from datetime import datetime
 
+
 def create_test_fixes():
     sample_fixes = []
     fix = GpsFix.GpsFix(0, 0, True, 24.840481, -98.166489, 0.0, 0.0, 0.0,

@@ -11,7 +11,7 @@ def create_gps_fix(row):
     altitude = float(row[3])
     accuracy = float(row[4])
     speed = float(row[5])
-    date = datetime.strptime(row[6],'%a %b %d %H:%M:%S CDT %Y')
+    date = datetime.strptime(row[6], '%a %b %d %H:%M:%S CDT %Y')
     level = float(row[7])
     voltage = float(row[8])
     status = row[9]

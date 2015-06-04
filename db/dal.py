@@ -10,9 +10,9 @@ def save_trajectory(trajectory):
     query = "INSERT INTO trajectories (idUser, startTime, endTime) VALUES (%(id_user)s, %(start_time)s, %(end_time)s)"
 
     trajectory_data = {
-        'id_user' : trajectory.id_user,
-        'start_time' : trajectory.start_time,
-        'end_time' : trajectory.end_time
+        'id_user': trajectory.id_user,
+        'start_time': trajectory.start_time,
+        'end_time': trajectory.end_time
     }
 
     inserted_id = qr.run_write_query(query, trajectory_data)

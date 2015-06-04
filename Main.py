@@ -1,5 +1,8 @@
-from dummy_data import create_test_fixes
+from input.dummy_data import create_test_fixes
 from algorithms.montoliou import montoliou_algorithm
+from algorithms.zhen import zhen_algorithm
+from maps import kml_creator
+import maps.kml_creator
 # from CsvReader import read_gps_fixes_file
 # from entities.Trajectory import Trajectory
 # from db import dal
@@ -22,8 +25,20 @@ from algorithms.montoliou import montoliou_algorithm
 # for fix in read_fixes:
 #     print(fix)
 
+# print('Montoliou')
 fixes = create_test_fixes()
-sps = montoliou_algorithm(fixes, 60, 3600, 150, True)
-print('....')
-for sp in sps:
-    print (sp)
+# sp_montoliou = montoliou_algorithm(fixes, 60, 3600, 150, True)
+# print('Stay points')
+# for sp in sp_montoliou:
+#     print(sp)
+#
+# print('')
+# print('Zhen')
+# sp_zhen = zhen_algorithm(fixes, 60, 150, True)
+# print('Stay points')
+# for sp in sp_zhen:
+#     print(sp)
+
+# kml_creator.create_pinned('pinned.kml', fixes)
+# kml_creator.create_lined('lined.kml', fixes)
+kml_creator.create_pinned_timed('pinned-timed.kml', fixes)

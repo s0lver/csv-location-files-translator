@@ -2,117 +2,82 @@ from entities import BatteryStatus
 from datetime import datetime
 import math
 
+
 def time_diff(pi, pj):
     diff = pj.date - pi.date
     return math.fabs(diff.total_seconds())
 
+
 def distance_diff(pi, pj):
-    lat1 = pi.latitude
-    lon1 = pi.longitude
-    lat2 = pj.latitude
-    lon2 = pj.longitude
+    lat1, lon1 = pi.latitude, pi.longitude
+    lat2, lon2 = pj.latitude, pj.longitude
 
-    results = []                                            # float[] results = new float[2];
-    MAXITERS = 20                                           # int MAXITERS = 20;
-                                                            #
-    lat1 *= math.pi / 180                                   # lat1 *= Math.PI / 180.0;
-    lat2 *= math.pi / 180                                   # lat2 *= Math.PI / 180.0;
-    lon1 *= math.pi / 180                                   # lon1 *= Math.PI / 180.0;
-    lon2 *= math.pi / 180                                   # lon2 *= Math.PI / 180.0;
-                                                            #
-    a = 6378137.0                                           # double a = 6378137.0; // WGS84 major axis
-    b = 6356752.3142                                        # double b = 6356752.3142; // WGS84 semi-major axis
-    f = (a - b) / a                                         # double f = (a - b) / a;
-    aSqMinusBSqOverBSq = (a * a - b * b) / (b * b)          # double aSqMinusBSqOverBSq = (a * a - b * b) / (b * b);
-                                                            #
-    L = lon2 - lon1;                                        # double L = lon2 - lon1;
-    A = 0.0                                                 # double A = 0.0;
-    U1 = math.atan((1.0 - f) * math.tan(lat1))              # double U1 = Math.atan((1.0 - f) * Math.tan(lat1));
-    U2 = math.atan((1.0 - f) * math.tan(lat2));             # double U2 = Math.atan((1.0 - f) * Math.tan(lat2));
-                                                            #
-    cosU1 = math.cos(U1)                                    # double cosU1 = Math.cos(U1);
-    cosU2 = math.cos(U2)                                    # double cosU2 = Math.cos(U2);
-    sinU1 = math.sin(U1)                                    # double sinU1 = Math.sin(U1);
-    sinU2 = math.sin(U2)                                    # double sinU2 = Math.sin(U2);
-    cosU1cosU2 = cosU1 * cosU2                              # double cosU1cosU2 = cosU1 * cosU2;
-    sinU1sinU2 = sinU1 * sinU2                              # double sinU1sinU2 = sinU1 * sinU2;
-                                                            #
-    sigma = 0.0                                             # double sigma = 0.0;
-    deltaSigma = 0.0                                        # double deltaSigma = 0.0;
-    cosSqAlpha = 0.0                                        # double cosSqAlpha = 0.0;
-    cos2SM = 0.0                                            # double cos2SM = 0.0;
-    cosSigma = 0.0                                          # double cosSigma = 0.0;
-    sinSigma = 0.0                                          # double sinSigma = 0.0;
-    cosLambda = 0.0                                         # double cosLambda = 0.0;
-    sinLambda = 0.0                                         # double sinLambda = 0.0;
-                                                            #
-    LAMBDA = L                                              # double lambda = L; // initial guess
-    for iter in range(0,MAXITERS):                          # for (int iter = 0; iter < MAXITERS; iter++){
-        lambdaOrig = LAMBDA                                 #     double lambdaOrig = lambda;
-        cosLambda = math.cos(LAMBDA)                        #     cosLambda = Math.cos(lambda);
-        sinLambda = math.sin(LAMBDA)                        #     sinLambda = Math.sin(lambda);
-        t1 = cosU2 * sinLambda                              #     double t1 = cosU2 * sinLambda;
-        t2 = cosU1 * sinU2 - sinU1 * cosU2 * cosLambda      #     double t2 = cosU1 * sinU2 - sinU1 * cosU2 * cosLambda;
-        sinSqSigma = t1 * t1 + t2 * t2                      #     double sinSqSigma = t1 * t1 + t2 * t2; // (14)
-        sinSigma = math.sqrt(sinSqSigma)                    #     sinSigma = Math.sqrt(sinSqSigma);
-        cosSigma = sinU1sinU2 + cosU1cosU2 * cosLambda      #     cosSigma = sinU1sinU2 + cosU1cosU2 * cosLambda; // (15)
-        sigma = math.atan2(sinSigma, cosSigma)              #     sigma = Math.atan2(sinSigma, cosSigma); // (16)
-        sinAlpha = 0.0 if sinSigma == 0 else cosU1cosU2 * sinLambda / sinSigma      #     double sinAlpha = (sinSigma == 0) ? 0.0 :
-                                                            #             cosU1cosU2 * sinLambda / sinSigma; // (17)
-        cosSqAlpha = 1.0 - sinAlpha * sinAlpha              #     cosSqAlpha = 1.0 - sinAlpha * sinAlpha;
-        cos2SM = 0.0 if cosSqAlpha == 0 else cosSigma - 2.0 * sinU1sinU2 / cosSqAlpha#     cos2SM = (cosSqAlpha == 0) ? 0.0 :
-                                                            #             cosSigma - 2.0 * sinU1sinU2 / cosSqAlpha; // (18)
-                                                            #
-        uSquared = cosSqAlpha * aSqMinusBSqOverBSq          #     double uSquared = cosSqAlpha * aSqMinusBSqOverBSq; // defn
-        A = 1 + (uSquared / 16384.0) * (4096.0 + uSquared * (-768 + uSquared * (320.0 - 175.0 * uSquared)))
+    max_iter = 20
 
-        #     A = 1 + (uSquared / 16384.0) * // (3)
-        #             (4096.0 + uSquared *
-        #                     (-768 + uSquared * (320.0 - 175.0 * uSquared)));
+    lat1 *= math.pi / 180
+    lat2 *= math.pi / 180
+    lon1 *= math.pi / 180
+    lon2 *= math.pi / 180
 
-        B = (uSquared / 1024.0) * (256.0 + uSquared * (-128.0 + uSquared * (74.0 - 47.0 * uSquared)))
+    a = 6378137.0
+    b = 6356752.3142
+    f = (a - b) / a
+    asq_minus_bsq_over_bsq = (a * a - b * b) / (b * b)
 
-        #     double B = (uSquared / 1024.0) * // (4)
-        #             (256.0 + uSquared *
-        #                     (-128.0 + uSquared * (74.0 - 47.0 * uSquared)));
+    l = lon2 - lon1
+    A = 0.0
+    u1 = math.atan((1.0 - f) * math.tan(lat1))
+    u2 = math.atan((1.0 - f) * math.tan(lat2))
 
-        C = (f / 16.0) * cosSqAlpha *(4.0 + f * (4.0 - 3.0 * cosSqAlpha))
-        #     double C = (f / 16.0) *
-        #             cosSqAlpha *
-        #             (4.0 + f * (4.0 - 3.0 * cosSqAlpha)); // (10)
+    cos_u1 = math.cos(u1)
+    cos_u2 = math.cos(u2)
+    sin_u1 = math.sin(u1)
+    sin_u2 = math.sin(u2)
+    cos_u1_cos_u2 = cos_u1 * cos_u2
+    sin_u1_sin_u2 = sin_u1 * sin_u2
 
-        cos2SMSq = cos2SM * cos2SM                          #     double cos2SMSq = cos2SM * cos2SM;
+    sigma = 0.0
+    delta_sigma = 0.0
 
-        deltaSigma = B * sinSigma * \
-            (cos2SM + (B / 4.0) * \
-            (cosSigma * (-1.0 + 2.0 * cos2SMSq) - \
-             (B / 6.0) * cos2SM * (-3.0 + 4.0 * sinSigma * sinSigma) *(-3.0 + 4.0 * cos2SMSq)))
-        #     deltaSigma = B * sinSigma * // (6)
-        #             (cos2SM + (B / 4.0) *
-        #                     (cosSigma * (-1.0 + 2.0 * cos2SMSq) -
-        #                             (B / 6.0) * cos2SM *
-        #                                     (-3.0 + 4.0 * sinSigma * sinSigma) *
-        #                                     (-3.0 + 4.0 * cos2SMSq)));
-        #
+    the_lambda = l
+    for i in range(0, max_iter):
+        lambda_orig = the_lambda
+        cos_lambda = math.cos(the_lambda)
+        sin_lambda = math.sin(the_lambda)
+        t1 = cos_u2 * sin_lambda
+        t2 = cos_u1 * sin_u2 - sin_u1 * cos_u2 * cos_lambda
+        sin_sq_lambda = t1 * t1 + t2 * t2
+        sin_sigma = math.sqrt(sin_sq_lambda)
+        cos_sigma = sin_u1_sin_u2 + cos_u1_cos_u2 * cos_lambda
+        sigma = math.atan2(sin_sigma, cos_sigma)
+        sin_alpha = 0.0 if sin_sigma == 0 else cos_u1_cos_u2 * sin_lambda / sin_sigma
 
+        cos_sq_alpha = 1.0 - sin_alpha * sin_alpha
+        cos2_sm = 0.0 if cos_sq_alpha == 0 else cos_sigma - 2.0 * sin_u1_sin_u2 / cos_sq_alpha
 
-        LAMBDA = L + (1.0 - C) * f * sinAlpha * \
-                     (sigma + C * sinSigma * (cos2SM + C * cosSigma * (-1.0 + 2.0 * cos2SM * cos2SM)))
-        #     lambda = L +
-        #             (1.0 - C) * f * sinAlpha *
-        #                     (sigma + C * sinSigma *
-        #                             (cos2SM + C * cosSigma *
-        #                                     (-1.0 + 2.0 * cos2SM * cos2SM))); // (11)
-        #
+        u_squared = cos_sq_alpha * asq_minus_bsq_over_bsq
+        A = 1 + (u_squared / 16384.0) * (4096.0 + u_squared * (-768 + u_squared * (320.0 - 175.0 * u_squared)))
 
-        delta = (LAMBDA - lambdaOrig) / LAMBDA              #     double delta = (lambda - lambdaOrig) / lambda;
-        if math.fabs(delta) < 1.0e-12:                       #     if (Math.abs(delta) < 1.0e-12) {
-            break                                           #         break;
-                                                            #     }
-                                                            # }
-                                                            #
-    distance = (float) (b * A * (sigma - deltaSigma))   # float distance = (float) (b * A * (sigma - deltaSigma));
-    return distance                                     # results[0] = distance;
+        B = (u_squared / 1024.0) * (256.0 + u_squared * (-128.0 + u_squared * (74.0 - 47.0 * u_squared)))
+
+        C = (f / 16.0) * cos_sq_alpha * (4.0 + f * (4.0 - 3.0 * cos_sq_alpha))
+
+        cos2_sm_sq = cos2_sm * cos2_sm
+
+        delta_sigma = B * sin_sigma * \
+                      (cos2_sm + (B / 4.0) * \
+                       (cos_sigma * (-1.0 + 2.0 * cos2_sm_sq) - \
+                        (B / 6.0) * cos2_sm * (-3.0 + 4.0 * sin_sigma * sin_sigma) * (-3.0 + 4.0 * cos2_sm_sq)))
+
+        the_lambda = l + (1.0 - C) * f * sin_alpha * \
+                         (sigma + C * sin_sigma * (cos2_sm + C * cos_sigma * (-1.0 + 2.0 * cos2_sm * cos2_sm)))
+
+        delta = (the_lambda - lambda_orig) / the_lambda
+        if math.fabs(delta) < 1.0e-12:
+            break
+
+    distance = b * A * (sigma - delta_sigma)
+    return distance
 
 
 class GpsFix(object):
@@ -133,4 +98,3 @@ class GpsFix(object):
         return '%d, %d, %i, %f, %f, %f, %s, %s' % \
                (self.id, self.id_trajectory, self.obtained, self.latitude, self.longitude, self.accuracy,
                 self.date, self.batteryInfo)
-

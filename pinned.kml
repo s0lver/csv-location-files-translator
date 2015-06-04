@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="feat_1">
+        <Placemark id="feat_2">
+            <name>point1</name>
+            <Point id="geom_0">
+                <coordinates>-98.166489,24.840481,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_3">
+            <name>point2</name>
+            <Point id="geom_1">
+                <coordinates>-98.164726,24.84123,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_4">
+            <name>point3</name>
+            <Point id="geom_2">
+                <coordinates>-98.163269,24.841026,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_5">
+            <name>point4</name>
+            <Point id="geom_3">
+                <coordinates>-98.156059,24.842857,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_6">
+            <name>point5</name>
+            <Point id="geom_4">
+                <coordinates>-98.155846,24.844316,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_7">
+            <name>point6</name>
+            <Point id="geom_5">
+                <coordinates>-98.155792,24.845079,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_8">
+            <name>point7</name>
+            <Point id="geom_6">
+                <coordinates>-98.155815,24.845606,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_9">
+            <name>point8</name>
+            <Point id="geom_7">
+                <coordinates>-98.155792,24.846004,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_10">
+            <name>point9</name>
+            <Point id="geom_8">
+                <coordinates>-98.155647,24.849789,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="feat_11">
+            <name>point10</name>
+            <Point id="geom_9">
+                <coordinates>-98.155594,24.850178,0.0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>
