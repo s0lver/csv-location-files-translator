@@ -1,5 +1,4 @@
-from algorithms import StayPoint
-from entities import GpsFix
+from entities import GpsFix, StayPoint
 
 
 def montoliou_algorithm(fixes, min_t, max_t, dist_tr, verbose=False):

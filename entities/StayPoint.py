@@ -6,17 +6,17 @@ class StayPoint(object):
         self.dep_time = dep_time
         self.amount_fixes = amount_fixes
 
-    def __init__(self, fixes, i, j):
+    @staticmethod
+    def create_stay_point(fixes, i, j):
         lower_bound = i
         upper_bound = j + 1
-        self.arr_time = fixes[i].date
-        self.dep_time = fixes[j].date
-        lat, long = self.calculate_centroid(fixes[lower_bound:upper_bound])
-        self.lat = lat
-        self.long = long
-        self.amount_fixes = upper_bound - lower_bound
+        arr_time = fixes[i].date
+        dep_time = fixes[j].date
+        lat, long = StayPoint.calculate_centroid(fixes[lower_bound:upper_bound])
+        amount_fixes = upper_bound - lower_bound
+        return StayPoint(lat,long,arr_time,dep_time,amount_fixes)
 
-    @staticmethod
+    @classmethod
     def calculate_centroid(fixes):
         n = len(fixes)
         sum_lat, sum_long = 0, 0

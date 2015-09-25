@@ -1,5 +1,4 @@
-from algorithms import StayPoint
-from entities import GpsFix
+from entities import GpsFix, StayPoint
 
 
 def zhen_algorithm(fixes, min_time, dist_tr, verbose=False):

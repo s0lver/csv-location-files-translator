@@ -1,5 +1,5 @@
 import csv
-from entities import GpsFix
+from entities import GpsFix, StayPoint
 from datetime import datetime
 
 def create_gps_fix(row):
@@ -20,6 +20,16 @@ def create_gps_fix(row):
     return GpsFix.GpsFix(id, id_trajectory, obtained, latitude, longitude, altitude, accuracy, speed, date,
                          level, voltage, status, temperature, connected)
 
+def create_staypoint(row):
+    latitude = float(row[0])
+    longitude = float(row[1])
+    arrival_time = datetime.strptime(row[2], '%d/%m/%Y %H:%M:%S')
+    departure_time = datetime.strptime(row[3], '%d/%m/%Y %H:%M:%S')
+    amount_fixes_involved = int(row[4])
+
+    return StayPoint.StayPoint(latitude, longitude, arrival_time, departure_time, amount_fixes_involved)
+
+
 def read_gps_fixes_file(path):
     file = open(path)
     csv_file = csv.reader(file)
@@ -31,6 +41,18 @@ def read_gps_fixes_file(path):
         gps_fixes.append(fix)
 
     return gps_fixes
+
+
+def read_staypoints_file(path):
+    file = open(path)
+    csv_file = csv.reader(file)
+
+    staypoints = []
+    for row in csv_file:
+        staypoint = create_staypoint(row)
+        staypoints.append(staypoint)
+
+    return staypoints
 
 """
 Description of the smartphone csv file structure
@@ -50,8 +72,11 @@ Pos     :meaning
 """
 
 """
-Structure of the staypoints (unused here)
-return String.format("%f,%f,%s,%s,%d", getLatitude(), getLongitude(),
-                simpleDateFormat.format(getArrivalTime()), simpleDateFormat.format(getDepartureTime()),
-                getAmountFixesInvolved());
+Description of the staypoints file
+Pos     :meaning
+0:      latitude
+1:      longitude
+2:      arrival_time
+3:      departure_time
+4:      amount_fixes_involved
 """
